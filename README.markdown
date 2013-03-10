@@ -60,13 +60,19 @@ you may already have, cloning the git repository, and updating your PATH.
 
     cd
     mv .xmonad .xmonad.orig
-    git clone https://github.com/vicfryzel/xmonad-config.git .xmonad
+    git clone git@github.com:goncalvesnelson/xmonad-config.git .xmonad
     echo "export PATH=\$PATH:~/.cabal/bin:~/.xmonad/bin" >> ~/.bashrc
     source ~/.bashrc
 
 Once xmonad-config is installed, you also need to ensure you can actually
 start xmonad.  The mechanism to do this varies based on each environment, but
 here are some instructions for some common login managers.
+
+
+### Using xmonad with mate in Linux Mint. Thanks [fcostin](https://github.com/fcostin/xmonad_and_mate.git)
+    cp mate/xmonad.desktop /usr/share/applications/xmonad.desktop
+    cp mate/xmonad-mate.desktop /usr/share/xsessions/xmonad-mate.desktop
+    mateconftool-2 -s /desktop/mate/session/required_components/windowmanager xmonad --type string
 
 ### Starting xmonad from xdm, kdm, or gdm
 
@@ -87,40 +93,44 @@ After starting xmonad, use the following keyboard shortcuts to function in
 your new window manager.  I recommend you print these out so that you don't
 get stranded once you logout and back in.
 
-* Alt+Shift+Return: Start a terminal
-* Alt+Ctrl+l: Lock screen
-* Alt+p: Start dmenu.  Once it comes up, type the name of a program and enter
-* Alt+Shift+p: Take screenshot in select mode. Click or click and drag to select
-* Alt+Ctrl+Shift+p: Take fullscreen screenshot. Supports multiple monitors
-* Alt+Shift+c: Close focused window
-* Alt+Space: Change workspace layout
-* Alt+Shift+Space: Change back to default workspace layout
-* Alt+n: Resize viewed windows to the correct size
-* Alt+Tab: Focus next window
-* Alt+j: Focus next window
-* Alt+k: Focus previous window
-* Alt+m: Focus master window
-* Alt+Return: Swap focused window with master window
-* Alt+Shift+j: Swap focused window with next window
-* Alt+Shift+k: Swap focused window with previous window
-* Alt+h: Shrink master window area
-* Alt+l: Expand master window area
-* Alt+t: Push floating window back into tiling
-* Alt+,: Increment number of windows in master window area
-* Alt+.: Decrement number of windows in master window area
-* Alt+q: Restart xmonad. This reloads xmonad configuration, does not logout
-* Alt+Shift+q: Quit xmonad and logout
-* Alt+[1-9]: Switch to workspace 1-9, depending on which number was pressed
-* Alt+Shift+[1-9]: Send focused window to workspace 1-9
-* Alt+w: Focus left-most monitor (Xinerama screen 1)
-* Alt+e: Focus center-most monitor (Xinerama screen 2)
-* Alt+r: Focus right-most monitor (Xinerama screen 3)
-* Alt+Shift+w: Send focused window to workspace on left-most monitor
-* Alt+Shift+e: Send focused window to workspace on center-most monitor
-* Alt+Shift+r: Send focused window to workspace on right-most monitor
-* Alt+Left Mouse Drag: Drag focused window out of tiling
-* Alt+Right Mouse Drag: Resize focused window, bring out of tiling if needed
-
+* Win+Shift+Return: Start a terminal
+* Win+Ctrl+l: Lock screen
+* Win+p: Start dmenu.  Once it comes up, type the name of a program and enter
+* Win+Shift+p: Take screenshot in select mode. Click or click and drag to select
+* Win+Ctrl+Shift+p: Take fullscreen screenshot. Supports multiple monitors
+* Win+Shift+c: Close focused window
+* Win+Space: Change workspace layout
+* Win+Shift+Space: Change back to default workspace layout
+* Win+n: Resize viewed windows to the correct size
+* Win+Tab: Focus next window
+* Win+j: Focus next window
+* Win+k: Focus previous window
+* Win+m: Focus master window
+* Win+Return: Swap focused window with master window
+* Win+Shift+j: Swap focused window with next window
+* Win+Shift+k: Swap focused window with previous window
+* Win+h: Shrink master window area
+* Win+l: Expand master window area
+* Win+t: Push floating window back into tiling
+* Win+,: Increment number of windows in master window area
+* Win+.: Decrement number of windows in master window area
+* Win+q: Restart xmonad. This reloads xmonad configuration, does not logout
+* Win+Shift+q: Quit xmonad and logout
+* Win+[1-9]: Switch to workspace 1-9, depending on which number was pressed
+* Win+Shift+[1-9]: Send focused window to workspace 1-9
+* Win+w: Focus left-most monitor (Xinerama screen 1)
+* Win+e: Focus center-most monitor (Xinerama screen 2)
+* Win+r: Focus right-most monitor (Xinerama screen 3)
+* Win+Shift+w: Send focused window to workspace on left-most monitor
+* Win+Shift+e: Send focused window to workspace on center-most monitor
+* Win+Shift+r: Send focused window to workspace on right-most monitor
+* Win+Left Mouse Drag: Drag focused window out of tiling
+* Win+Right Mouse Drag: Resize focused window, bring out of tiling if needed
+* Win+i: Start Pidgin
+* Win+v: Start emacs
+* Win+c: Start Chromium-browser
+* Win+f: Start Firefox
+* Win+s: Start System Monitor
 
 ## Personalizing or modifying xmonad-config
 

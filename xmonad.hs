@@ -24,15 +24,14 @@ import qualified Data.Map        as M
 -- The preferred terminal program, which is used in a binding below and by
 -- certain contrib modules.
 --
-myTerminal = "/usr/bin/urxvt"
+myTerminal = "/usr/bin/mate-terminal"
 
 
 ------------------------------------------------------------------------
 -- Workspaces
 -- The default number of workspaces (virtual screens) and their names.
 --
-myWorkspaces = ["1:term","2:web","3:code","4:vm","5:media"] ++ map show [6..9]
- 
+myWorkspaces = ["1:web","2:code","3:testing","4:servers","5:misc1","6:vm","7:media","8:im","9:mail"]
 
 ------------------------------------------------------------------------
 -- Window rules
@@ -49,17 +48,20 @@ myWorkspaces = ["1:term","2:web","3:code","4:vm","5:media"] ++ map show [6..9]
 -- 'className' and 'resource' are used below.
 --
 myManageHook = composeAll
-    [ className =? "Google-chrome"  --> doShift "2:web"
+    [ className =? "Chromium-browser"  --> doShift "1:web"
+    , className =? "Do"        -->  doFloat
+    , className =? "Firefox"        -->  doShift "1:web"
     , resource  =? "desktop_window" --> doIgnore
-    , className =? "Galculator"     --> doFloat
     , className =? "Steam"          --> doFloat
     , className =? "Gimp"           --> doFloat
     , resource  =? "gpicview"       --> doFloat
     , className =? "MPlayer"        --> doFloat
-    , className =? "VirtualBox"     --> doShift "4:vm"
-    , className =? "Xchat"          --> doShift "5:media"
+    , className =? "Pidgin"         --> doShift "8:im"
+    , className =? "Spotify"        --> doShift "7:media"
+    , className =? "Thunderbird"    --> doShift "9:mail"
+    , className =? "VirtualBox"     --> doShift "6:vm"
+    , className =? "Xchat"          --> doShift "8:im"
     , isFullscreen --> (doF W.focusDown <+> doFullFloat)]
-
 
 ------------------------------------------------------------------------
 -- Layouts
@@ -104,7 +106,7 @@ xmobarTitleColor = "#FFB6B0"
 xmobarCurrentWorkspaceColor = "#CEFFAC"
 
 -- Width of the window border in pixels.
-myBorderWidth = 1
+myBorderWidth = 2
 
 
 ------------------------------------------------------------------------
@@ -115,8 +117,8 @@ myBorderWidth = 1
 -- ("right alt"), which does not conflict with emacs keybindings. The
 -- "windows key" is usually mod4Mask.
 --
-myModMask = mod1Mask
- 
+myModMask = mod4Mask
+
 myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
   ----------------------------------------------------------------------
   -- Custom key bindings
@@ -244,6 +246,8 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
 
   -- Toggle the status bar gap.
   -- TODO: update this binding with avoidStruts, ((modMask, xK_b),
+  , ((modMask, xK_b),
+     sendMessage ToggleStruts)
 
   -- Quit xmonad.
   , ((modMask .|. shiftMask, xK_q),
@@ -254,7 +258,14 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
      restart "xmonad" True)
   ]
   ++
- 
+--mykeys
+  [  ((modMask, xK_f), spawn "firefox")
+  ,((modMask, xK_v), spawn "emacs")
+  ,((modMask, xK_i), spawn "pidgin")
+  ,((modMask, xK_c), spawn "chromium-browser")
+  ,((modMask, xK_s), spawn "mate-system-monitor")
+  ]
+  ++
   -- mod-[1..9], Switch to workspace N
   -- mod-shift-[1..9], Move client to workspace N
   [((m .|. modMask, k), windows $ f i)
