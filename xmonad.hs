@@ -48,19 +48,20 @@ myWorkspaces = ["1:web","2:code","3:testing","4:servers","5:misc1","6:vm","7:med
 -- 'className' and 'resource' are used below.
 --
 myManageHook = composeAll
-    [ className =? "Chromium-browser"  --> doShift "1:web"
-    , className =? "Do"        -->  doFloat
-    , className =? "Firefox"        -->  doShift "1:web"
-    , resource  =? "desktop_window" --> doIgnore
-    , className =? "Steam"          --> doFloat
-    , className =? "Gimp"           --> doFloat
-    , resource  =? "gpicview"       --> doFloat
-    , className =? "MPlayer"        --> doFloat
-    , className =? "Pidgin"         --> doShift "8:im"
-    , className =? "Spotify"        --> doShift "7:media"
-    , className =? "Thunderbird"    --> doShift "9:mail"
-    , className =? "VirtualBox"     --> doShift "6:vm"
-    , className =? "Xchat"          --> doShift "8:im"
+    [ className =? "Chromium-browser"     --> doShift "1:web"
+    , className =? "Hamster-time-tracker" --> doShift "1:web"
+    , className =? "Firefox"              --> doShift "1:web"
+    , resource  =? "desktop_window"       --> doIgnore
+    , className =? "Do"                   --> doFloat
+    , className =? "Steam"                --> doFloat
+    , className =? "Gimp"                 --> doFloat
+    , resource  =? "gpicview"             --> doFloat
+    , className =? "MPlayer"              --> doFloat
+    , className =? "Vmplayer"             --> doShift "6:vm"
+    , className =? "Spotify"              --> doShift "7:media"
+    , className =? "Xchat"                --> doShift "8:im"
+    , className =? "Pidgin"               --> doShift "8:im"
+    , className =? "Thunderbird"          --> doShift "9:mail"
     , isFullscreen --> (doF W.focusDown <+> doFullFloat)]
 
 ------------------------------------------------------------------------
@@ -87,7 +88,7 @@ myLayout = avoidStruts (
 -- Currently based on the ir_black theme.
 --
 myNormalBorderColor  = "#7c7c7c"
-myFocusedBorderColor = "#ffb6b0"
+myFocusedBorderColor = "#2F41FF"
 
 -- Colors for text and backgrounds of each tab when in "Tabbed" layout.
 tabConfig = defaultTheme {
@@ -106,7 +107,7 @@ xmobarTitleColor = "#FFB6B0"
 xmobarCurrentWorkspaceColor = "#CEFFAC"
 
 -- Width of the window border in pixels.
-myBorderWidth = 2
+myBorderWidth = 3
 
 
 ------------------------------------------------------------------------
@@ -262,7 +263,6 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
   [  ((modMask, xK_f), spawn "firefox")
   ,((modMask, xK_v), spawn "emacs")
   ,((modMask, xK_i), spawn "pidgin")
-  ,((modMask, xK_c), spawn "chromium-browser")
   ,((modMask, xK_s), spawn "mate-system-monitor")
   ]
   ++
