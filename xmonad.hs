@@ -1,7 +1,7 @@
 -- xmonad config used by Vic Fryzel
 -- Author: Vic Fryzel
 -- http://github.com/vicfryzel/xmonad-config
- 
+
 import System.IO
 import System.Exit
 import XMonad
@@ -53,11 +53,11 @@ myManageHook = composeAll
     , className =? "Firefox"              --> doShift "1:web"
     , resource  =? "desktop_window"       --> doIgnore
     , className =? "Do"                   --> doFloat
-    , className =? "Steam"                --> doFloat
     , className =? "Gimp"                 --> doFloat
     , resource  =? "gpicview"             --> doFloat
     , className =? "MPlayer"              --> doFloat
     , className =? "Vmplayer"             --> doShift "6:vm"
+    , className =? "VirtualBox"           --> doShift "6:vm"
     , className =? "Spotify"              --> doShift "7:media"
     , className =? "Xchat"                --> doShift "8:im"
     , className =? "Pidgin"               --> doShift "8:im"
@@ -116,6 +116,7 @@ myBorderWidth = 3
 -- modMask lets you specify which modkey you want to use. The default
 -- is mod1Mask ("left alt").  You may also consider using mod3Mask
 -- ("right alt"), which does not conflict with emacs keybindings. The
+
 -- "windows key" is usually mod4Mask.
 --
 myModMask = mod4Mask
@@ -259,7 +260,7 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
      restart "xmonad" True)
   ]
   ++
---mykeys
+  -- mykeys
   [  ((modMask, xK_f), spawn "firefox")
   ,((modMask, xK_v), spawn "emacs")
   ,((modMask, xK_i), spawn "pidgin")
@@ -278,8 +279,8 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
   [((m .|. modMask, key), screenWorkspace sc >>= flip whenJust (windows . f))
       | (key, sc) <- zip [xK_w, xK_e, xK_r] [0..]
       , (f, m) <- [(W.view, 0), (W.shift, shiftMask)]]
- 
- 
+
+
 ------------------------------------------------------------------------
 -- Mouse bindings
 --
@@ -287,24 +288,24 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
 -- True if your focus should follow your mouse cursor.
 myFocusFollowsMouse :: Bool
 myFocusFollowsMouse = True
- 
+
 myMouseBindings (XConfig {XMonad.modMask = modMask}) = M.fromList $
   [
     -- mod-button1, Set the window to floating mode and move by dragging
     ((modMask, button1),
      (\w -> focus w >> mouseMoveWindow w))
- 
+
     -- mod-button2, Raise the window to the top of the stack
     , ((modMask, button2),
        (\w -> focus w >> windows W.swapMaster))
- 
+
     -- mod-button3, Set the window to floating mode and resize by dragging
     , ((modMask, button3),
        (\w -> focus w >> mouseResizeWindow w))
- 
+
     -- you may also bind events to the mouse scroll wheel (button4 and button5)
   ]
- 
+
 
 ------------------------------------------------------------------------
 -- Status bars and logging
@@ -315,7 +316,7 @@ myMouseBindings (XConfig {XMonad.modMask = modMask}) = M.fromList $
 --
 -- > logHook = dynamicLogDzen
 --
- 
+
 
 ------------------------------------------------------------------------
 -- Startup hook
@@ -324,8 +325,8 @@ myMouseBindings (XConfig {XMonad.modMask = modMask}) = M.fromList $
 -- per-workspace layout choices.
 --
 -- By default, do nothing.
-myStartupHook = return ()
- 
+myStartupHook = setWMName "LG3D"
+
 
 ------------------------------------------------------------------------
 -- Run xmonad with all the defaults we set up.
@@ -339,16 +340,16 @@ main = do
           , ppCurrent = xmobarColor xmobarCurrentWorkspaceColor ""
           , ppSep = "   "}
       , manageHook = manageDocks <+> myManageHook
-      , startupHook = setWMName "LG3D"
+      --, startupHook = setWMName "LG3D"
   }
- 
+
 
 ------------------------------------------------------------------------
 -- Combine it all together
 -- A structure containing your configuration settings, overriding
--- fields in the default config. Any you don't override, will 
+-- fields in the default config. Any you don't override, will
 -- use the defaults defined in xmonad/XMonad/Config.hs
--- 
+--
 -- No need to modify this.
 --
 defaults = defaultConfig {
@@ -360,13 +361,13 @@ defaults = defaultConfig {
     workspaces         = myWorkspaces,
     normalBorderColor  = myNormalBorderColor,
     focusedBorderColor = myFocusedBorderColor,
- 
+
     -- key bindings
     keys               = myKeys,
     mouseBindings      = myMouseBindings,
- 
+
     -- hooks, layouts
-    layoutHook         = smartBorders $ myLayout,
+    layoutHook         = smartBorders,
     manageHook         = myManageHook,
     startupHook        = myStartupHook
 }
