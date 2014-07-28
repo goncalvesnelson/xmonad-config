@@ -5,6 +5,7 @@
 import System.IO
 import System.Exit
 import XMonad
+import XMonad.Config.Gnome
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.ManageHelpers
@@ -14,7 +15,6 @@ import XMonad.Layout.NoBorders
 import XMonad.Layout.Spiral
 import XMonad.Layout.Tabbed
 import XMonad.Util.Run(spawnPipe)
-import XMonad.Util.EZConfig(additionalKeys)
 import qualified XMonad.StackSet as W
 import qualified Data.Map        as M
 
@@ -25,7 +25,6 @@ import qualified Data.Map        as M
 -- certain contrib modules.
 --
 myTerminal = "/usr/bin/mate-terminal"
-
 
 ------------------------------------------------------------------------
 -- Workspaces
@@ -333,41 +332,24 @@ myStartupHook = setWMName "LG3D"
 --
 main = do
   xmproc <- spawnPipe "/usr/bin/xmobar ~/.xmonad/xmobar.hs"
-  xmonad $ defaults {
+  xmonad $ gnomeConfig {
       logHook = dynamicLogWithPP $ xmobarPP {
             ppOutput = hPutStrLn xmproc
           , ppTitle = xmobarColor xmobarTitleColor "" . shorten 100
           , ppCurrent = xmobarColor xmobarCurrentWorkspaceColor ""
           , ppSep = "   "}
+      , layoutHook = smartBorders $ myLayout
       , manageHook = manageDocks <+> myManageHook
-      --, startupHook = setWMName "LG3D"
-  }
-
-
-------------------------------------------------------------------------
--- Combine it all together
--- A structure containing your configuration settings, overriding
--- fields in the default config. Any you don't override, will
--- use the defaults defined in xmonad/XMonad/Config.hs
---
--- No need to modify this.
---
-defaults = defaultConfig {
-    -- simple stuff
-    terminal           = myTerminal,
-    focusFollowsMouse  = myFocusFollowsMouse,
-    borderWidth        = myBorderWidth,
-    modMask            = myModMask,
-    workspaces         = myWorkspaces,
-    normalBorderColor  = myNormalBorderColor,
-    focusedBorderColor = myFocusedBorderColor,
+      , modMask = myModMask
+      , terminal           = myTerminal
+      , focusFollowsMouse  = myFocusFollowsMouse
+      , borderWidth        = myBorderWidth
+      , workspaces         = myWorkspaces
+      , normalBorderColor  = myNormalBorderColor
+      , focusedBorderColor = myFocusedBorderColor
 
     -- key bindings
-    keys               = myKeys,
-    mouseBindings      = myMouseBindings,
-
-    -- hooks, layouts
-    layoutHook         = smartBorders,
-    manageHook         = myManageHook,
-    startupHook        = myStartupHook
-}
+      , keys               = myKeys
+      , mouseBindings      = myMouseBindings
+      , startupHook = myStartupHook
+  }
